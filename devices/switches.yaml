@@ -1,0 +1,25 @@
+  - platform: mqtt
+    name: "xmass lights"
+    state_topic: "home/sonoff/xmass/1/stat"
+    command_topic: "home/sonoff/xmass/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Switch.1"
+    state_topic: "home/sonoff/switch/1/stat"
+    command_topic: "home/sonoff/switch/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "playroom top lights"
+    friendly_name: "Playroom Spotlights"
+    state_topic: "home/sonoff/LivingRoom/1/stat"
+    command_topic: "home/sonoff/LivingRoom/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true

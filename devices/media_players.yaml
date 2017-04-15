@@ -1,0 +1,19 @@
+### MEDIA PLAYERS ###
+
+- platform: kodi
+  host: 192.168.2.110
+  name: FerBed
+  port: 80
+- platform: kodi
+  host: 192.168.2.111
+  name: SalaBits
+  port: 80
+- platform: cast
+  host: 192.168.2.201
+  name: HomeBits
+- platform: cast
+  host: 192.168.2.203
+  name: BedSoundBits
+# - platform: spotify
+  # client_id: !secret spotify_client_id
+  # client_secret: !secret spotify_client_secret

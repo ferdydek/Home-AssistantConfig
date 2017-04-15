@@ -1,0 +1,10 @@
+- platform: waqi
+  token: 9b48577cee1d0b6dad479412a48fcb1cd8a31823
+  locations: lisboa  
+
+- platform: haveibeenpwned
+  email: 
+    - ferdydek@gmail.com
+    - nunocastro99@hotmail.com    
+
+- platform: yr

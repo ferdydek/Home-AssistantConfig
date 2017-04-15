@@ -1,0 +1,76 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: LittleBits
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: 120
+  unit_system: metric
+  time_zone: Europe/Lisbon
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend 
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123 
+
+ifttt:
+    key: !secret ifttt_key 
+ 
+mqtt:
+  broker: 192.168.2.235
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  username: !secret localmqtt_user 
+  password: !secret localmqtt_pass 
+  protocol: 3.1
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time. 
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  platform: google
+
+# Bonjour 
+zeroconf:
+
+## INCLUDES
+
+group: !include groups.yaml
+media_player: !include devices/media_players.yaml
+sensor: !include sensors.yaml
+weblink: !include web_links.yaml
+switch: !include devices/switches.yaml
+emulated_hue: !include devices/emulated_hue.yaml
+device_tracker: !include device_tracker.yaml
+
+
+    
+  
+

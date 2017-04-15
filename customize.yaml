@@ -1,0 +1,55 @@
+
+
+#################################
+## EMULATED HUE customizations ##
+
+# skip devices
+##media_player.lxbits_2:
+##  emulated_hue: false
+switch.switch1: 
+  emulated_hue: false
+group.multimedia:
+  emulated_hue: false
+
+
+# Rename devices
+switch.playroom_top_lights:
+  emulated_hue_name: "Playroom Top lights"
+  friendly_name: "Playroom Spotlights"
+  icon: mdi:ceiling-light
+switch.xmass_lights:
+  emulated_hue_name: "Christmas Lights"
+  friendly_name: "Christmass Lights"
+  icon: mdi:led-on
+media_player.bedsoundbits:
+  emulated_hue_name: "Bedroom Cast"
+  friendly_name: "Bedroom Chromesast"
+  icon: mdi:cast
+media_player.HomeBits:
+  emulated_hue_name: "Playroom Home"
+  icon: mdi:cast
+media_player.ferbed:
+  emulated_hue_name: "Bedroom Kodi"
+  icon: mdi:kodi
+media_player.salabits:
+  emulated_hue_name: "Playroom Kodi"
+  icon: mdi:kodi
+
+## / EMULATED HUE              ##   
+#################################
+
+#############################
+## SWITCHES customizations ##
+
+## TRACKER ##
+#############
+device_tracker.s6bits:
+  friendly_name: ferdi.S6
+  entity_picture: "/local/ferdydek.jpg"
+
+device_tracker.android2eb7d779f91ab980:
+  friendly_name: nuno.n4
+  entity_picture: "/local/andre.PNG"
+
+## / TRACKER ##
+###############

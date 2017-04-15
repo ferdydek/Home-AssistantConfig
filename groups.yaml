@@ -1,0 +1,32 @@
+Multimedia:
+  entities:
+    - media_player.salabits
+    - media_player.ferbed
+Kodi:
+  view: yes
+  icon: 'mdi:kodi'
+  entities: 
+  - media_player.salabits
+  - media_player.ferbed
+
+googles:
+  view: yes
+  icon: 'mdi:google'
+  entities: 
+  - media_player.HomeBits
+  - media_player.BedSoundBits
+  
+bedroom:
+  view: yes
+  icon: 'mdi:hotel'
+  entities: 
+  - media_player.BedSoundBits
+  - media_player.ferbed
+
+
+playroom:
+  view: yes
+  icon: 'mdi:crown'
+  entities: 
+  - media_player.HomeBits
+  - media_player.salabits
