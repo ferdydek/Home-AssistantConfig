@@ -1,0 +1,58 @@
+homeassistant:
+  customize:
+    group.housekeeping:
+      order: 99
+
+group:
+  housekeeping:
+    name: House Keeping
+    view: yes
+    icon: mdi:broom
+    entities:
+      - group.housekeeping_commands
+      - group.housekeeping_sensors
+  
+  housekeeping_commands:
+    control: hidden
+    name: 'Housekeeping commands'
+    entities:
+      - script.renew_ssl
+      - script.update_ha
+  
+  housekeeping_sensors:
+    control: hidden
+    name: 'Housekeeping sensors'
+    entities:
+      - sensor.cpu_temperature
+      - sensor.ssl_certificate_expiry
+
+
+script:
+  renew_ssl:
+    alias: 'renew SSL cert :8125'
+    sequence:
+      - service: shell_command.renew_ssl
+  update_ha:
+    alias: 'update HA'
+    sequence:
+      - service: shell_command.update_ha
+
+shell_command:
+  renew_ssl: 'sudo -u root /home/homeassistant/.homeassistant/ssl/certbot/certbot-auto renew'
+  update_ha: 'sudo -u root /home/homeassistant/.homeassistant/scripts/update_homeassistant.sh'
+  
+
+## WARNING ##  this is security risk ## WARNING ##
+## visudo >> add "homeassistant "homeassistant ALL=NOPASSWD: <full script path>" for each script that you want to authorize
+## WARNING ##  this is security risk ## WARNING ##
+
+sensor:
+  - platform: cert_expiry
+    host: ferdydek.myddns.me
+    port: 8125
+
+  - platform: command_line
+    name: "CPU_Temperature"
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) }}'

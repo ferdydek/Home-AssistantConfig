@@ -1,0 +1,62 @@
+# - alias: Welcome Home Raf
+#   trigger:
+#     platform: state
+#     entity_id: device_tracker.s6bits
+#     from: 'not_home'
+#     to: 'home'
+#     for:
+#       hours: 0
+#       minutes: 1
+#       seconds: 0
+#   action:
+#     - service: tts.google_say
+#       entity_id: media_player.homebits
+#       data_template:
+#         message: >
+#          {{ [ "Welcome home Rafal. I missed you so much.", "Welcome back Rafal. Have you had a good day?", "Is it that time already, welcome home Rafal the creator!", "Ahh, I see Rafal is back. Great to see you old chap.", "I came across a wooden stick. Oh, and hello Rafal.", "GET FUCKED", "Sup, massive faggot", "Welcome home my Lord, how may i assist you? may i take your coat?"  ] | random }}
+#     # - service: notify.SimplePush_Mike
+#     #   data:
+#     #     message: Mike arrived home
+#     #     title: Home
+
+# - alias: Turn on backlight if after dark and computer is on
+#   #hide_entity: true
+#   trigger:
+#     platform: template
+#     value_template: "{% if is_state('device_tracker.s6bits', 'home') %}true{% endif %}"
+#   condition:
+#     condition: or
+#     conditions:
+#       - condition: template
+#         value_template: '{{ states.sun.sun.attributes.elevation < 4 }}'
+#   action:
+#     service: homeassistant.turn_on
+#     entity_id: light.computer_neopixel
+
+
+# - alias: Keep Philips TV alive while KODI is playing (dont let it go to sleep)
+#   trigger:
+#     platform: time
+#     minutes: '/5'
+#   condition:
+#     - condition: state
+#       entity_id: media_player.ferbed
+#       state: 'playing'
+#   action:
+#     service: switch.turn_on
+#     entity_id: switch.philipstv
+
+
+- alias: Router Update Available Notification
+  trigger:
+    - platform: state
+      entity_id: sensor.router_update
+  action:
+    service: notify.html5
+    data_template: 
+      title: 'New firmware version for router'
+      message: "There is available new firmware version {{ states.sensor.router_update.state }} for router with IP {{ states.sensor.router_update.attributes.router_ip }}."
+    data:
+      data:
+        tag: 'notification-router-update'
+        url: "https://asuswrt.lostrealm.ca/changelog"

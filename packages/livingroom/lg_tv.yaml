@@ -1,0 +1,32 @@
+media_player:
+  - platform: webostv
+    host: 192.168.2.204
+    name: Living room TV
+    mac: !secret LGwebOSTV_MAC 
+    filename: webostv.conf
+    icon: mdi:television
+    customize:
+      sources:
+        - Plex
+        - ps4
+        - Kodi
+        - Netflix
+        - Youtube
+        - Spotify
+#        - makotv
+
+notify:
+  - platform: webostv
+    host: 192.168.2.204
+    name: livingroom_tv
+    filename: webostv.conf
+
+group:
+  living_room_tv:
+    name: 'Living room TV'
+    entities: 
+      - media_player.living_room_tv
+
+# TODO:
+
+# - automation to power off tv if ferbed is idle for more than xx minutes.

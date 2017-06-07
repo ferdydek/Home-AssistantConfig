@@ -1,0 +1,152 @@
+##Define neccessary components
+input_select:
+  darig_power_options:
+    name: DaRig
+    options:
+      - 'On'
+      - Restart
+      - Shutdown
+      - Sleep
+      - Hibernate
+      - 'Off'
+    icon: mdi:desktop-tower
+
+switch:
+- platform: wake_on_lan
+  mac_address: !secret DaRig_MAC
+  name: "DaRig_WOL"
+  host: darig
+  hidden: true
+
+## Define state changes except WOL-ON.
+## Currently used: http://www.airytec.com/en/switch-off/get?version=3.5.0.950
+shell_command:
+  shutdown_power_darig: !secret darig_shutdown_power_darig
+  restart_power_darig: !secret darig_restart_power_darig
+  sleep_power_darig: !secret darig_sleep_power_darig
+  hibernate_power_darig: !secret darig_hibernate_power_darig
+
+
+automation: 
+## Run script depending on selected input option
+  - id: darig_power_restart
+    alias: darig_power_restart
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: input_select.darig_power_options
+      to: Restart
+    action:
+      - service: shell_command.restart_power_darig
+
+  - id: darig_power_shutdown
+    alias: darig_power_shutdown
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: input_select.darig_power_options
+      to: Shutdown
+    action:
+      - service: shell_command.shutdown_power_darig
+ 
+  - id: darig_power_sleep
+    alias: darig_power_sleep
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: input_select.darig_power_options
+      to: Sleep
+    action:
+      - service: shell_command.sleep_power_darig
+
+  - id: darig_power_hibernate
+    alias: darig_power_hibernate
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: input_select.darig_power_options
+      to: Hibernate
+    action:
+      - service: shell_command.hibernate_power_darig
+  ## Run WOL-ON if ON is selected as input option
+  - id: darig_power_poweron
+    alias: darig_power_poweron
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: input_select.darig_power_options
+      to: 'On'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.darig_wol
+
+## reflect ON/OFF state from sensor in the current input option (has delay) 
+  - id: darig_power_wol_triggered
+    alias: darig_power_wol_triggered
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: switch.darig_wol
+    action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.darig_power_options
+        option : >
+          {% if is_state("switch.darig_wol", "on") %}
+          On
+          {%-elif is_state("switch.darig_wol", "off") %}
+          Off
+          {% endif %}
+
+sensor:
+  - platform: snmp
+    host: 192.168.2.120
+    name: darig_snmp
+    baseoid: 1.3.6.1.2.1.1.5.0
+    community: public
+    version: 2c
+
+group:
+  darig_automations:
+    name: 'DaRig Automations'
+    entities:
+    - automation.darig_power_sleep
+    - automation.darig_power_hibernate
+    - automation.darig_power_restart
+    - automation.darig_power_shutdown
+    - automation.darig_power_poweron
+    - automation.darig_power_wol_triggered
+
+  darig_scenes:
+    name: 'DaRig Scenes'
+    entities:
+    - scene.darig_backlight
+  
+  darig:
+    name: 'DaRig'
+    control: hidden
+    entities:
+    - group.darig_pc
+    - group.darig_automations
+    - group.darig_scenes
+ 
+  darig_pc:
+    name: DaRig PC
+    control: hidden
+    entities:
+    - switch.darig_wol
+    - input_select.darig_power_options
+    view: false
+
+scene:
+  - name: 'DaRig Backlight'
+    entities:
+      light.computer_neopixel:
+        state: on
+        effect: solid
+        rgb_color: [139,37,0]
+        brightness: 255
+
+
+
+

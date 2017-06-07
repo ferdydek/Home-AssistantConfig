@@ -1,0 +1,33 @@
+homeassistant:
+  customize:
+    group.multimedia:
+      emulated_hue: false
+    group.all_devices:
+      emulated_hue: false
+    group.all_switches:
+      emulated_hue: false
+    group.all_lights:
+      emulated_hue: false
+  
+  
+emulated_hue:  
+  host_ip: 192.168.2.235
+  type: google_home
+  # Google Home does not work on different ports.
+  listen_port: 80
+  off_maps_to_on_domains:
+    #- script
+    #- scene
+  expose_by_default: true
+  exposed_domains:
+    - light
+    # - media_player
+    # - scene
+    # - script
+
+
+## INFO
+#
+# http://192.168.2.197/api/pi/lights should show exposed lights
+#
+# http://192.168.2.197/description.xml should show default Philips Hue discovery XML info

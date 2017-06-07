@@ -1,0 +1,36 @@
+homeassistant:
+  customize:
+    device_tracker.e8508b314aa7:
+      friendly_name: ferdi.S6
+      entity_picture: "/local/ferdydek.jpg"
+      icon: mdi:cellphone-android
+
+group:
+  rafal:
+    view: yes
+    name: 'Rafał'
+    control: hidden
+    icon: mdi:human-handsup
+    entities:
+      - sensor.breaches_ferdydekgmailcom
+      - sensor.breaches_feeeeinteriapl
+      - group.mobiles6
+
+  mobiles6:
+    name: s6tracker
+    entities:
+    - device_tracker.hassbits_fs6
+    - device_tracker.s6bits
+    - device_tracker.e8508b314aa7
+
+sensor:
+  - platform: haveibeenpwned
+    email: 
+      - !secret fer*****mail.com
+      - !secret fee*****eria.pl 
+
+device_tracker:
+  - platform: owntracks
+
+
+

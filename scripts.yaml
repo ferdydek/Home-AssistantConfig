@@ -1,0 +1,13 @@
+- AlarmClock:
+    alias: Alarm Clock
+    sequence:
+      - service: media_player.select_source
+        data_template:
+          entity_id: media_player.spotify
+          source: HomeBits
+      - service: media_player.play_media
+        data_template: 
+          entity_id: media_player.spotify
+          media_content_type: music
+          media_content_id: 'spotify:track:0W0BDGgVnwWwMEaWwEZntk'
+

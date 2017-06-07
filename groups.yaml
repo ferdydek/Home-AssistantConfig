@@ -1,32 +1,24 @@
+
 Multimedia:
   entities:
-    - media_player.salabits
-    - media_player.ferbed
-Kodi:
-  view: yes
-  icon: 'mdi:kodi'
-  entities: 
   - media_player.salabits
   - media_player.ferbed
 
-googles:
-  view: yes
-  icon: 'mdi:google'
-  entities: 
-  - media_player.HomeBits
-  - media_player.BedSoundBits
-  
-bedroom:
-  view: yes
-  icon: 'mdi:hotel'
-  entities: 
-  - media_player.BedSoundBits
-  - media_player.ferbed
+automations:
+  view: true
+  name: automations
+  icon: mdi:robot
+  entities:
+  - group.all_automations
+  - automation.auto_renew_ssl_cert
+  #- automation.turn_on_backlight_if_after_dark_and_computer_is_on
+  - automation.welcome_home_raf
+  - automation.keep_philips_tv_alive_while_kodi_is_playing_dont_let_it_go_to_sleep
+  #- automation.alarm_clock
+  - group.darig_automations
 
+presence:
+  name: Presence
+  entities:
+  - group.mobiles6
 
-playroom:
-  view: yes
-  icon: 'mdi:crown'
-  entities: 
-  - media_player.HomeBits
-  - media_player.salabits

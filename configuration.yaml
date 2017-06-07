@@ -7,34 +7,38 @@ homeassistant:
   unit_system: metric
   time_zone: Europe/Lisbon
   customize: !include customize.yaml
-
-# Show links to resources in log and frontend 
-# introduction:
+  packages: !include_dir_named packages
 
 # Enables the frontend
 frontend:
 
 # Enables configuration UI
+automation old: !include automations_old.yaml
+automation: !include automations.yaml
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
-  # api_password: PASSWORD
-  # Uncomment this if you are using SSL or running in Docker etc
-  # base_url: example.duckdns.org:8123 
+  api_password: !secret HTTP_PASSWORD
+  base_url: !secret my_base_url_wport
+  server_port: 8125
+  ssl_certificate: /home/homeassistant/.homeassistant/ssl/fullchain.pem
+  ssl_key: /home/homeassistant/.homeassistant/ssl/privkey.pem 
+  # cors_allowed_origins:
+  #   - https://google.com
+  #   - https://home-assistant.io
+  #use_x_forwarded_for: True
+  trusted_networks:
+    - 127.0.0.1
+    - ::1
+    - 192.168.2.0/24
+    - 192.168.1.0/24
+    - !secret allowed_IP
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
 
 ifttt:
     key: !secret ifttt_key 
  
-mqtt:
-  broker: 192.168.2.235
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: !secret localmqtt_user 
-  password: !secret localmqtt_pass 
-  protocol: 3.1
-
 # Checks for available updates
 updater:
 
@@ -55,22 +59,26 @@ sun:
 
 # Text to speech
 tts:
-  platform: google
+  - platform: google
+    language: en
+
+# logging level setup
+logger:
+  default: warning
+  logs:
+    homeassistant.components.scrip: info
+  #  logs:
+  #  homeassistant.components.media_player: debug
+    
 
 # Bonjour 
 zeroconf:
 
+  
 ## INCLUDES
 
 group: !include groups.yaml
-media_player: !include devices/media_players.yaml
+switch: !include devices/switches.yaml
+
 sensor: !include sensors.yaml
 weblink: !include web_links.yaml
-switch: !include devices/switches.yaml
-emulated_hue: !include devices/emulated_hue.yaml
-device_tracker: !include device_tracker.yaml
-
-
-    
-  
-

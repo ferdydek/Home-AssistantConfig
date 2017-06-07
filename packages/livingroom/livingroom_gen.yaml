@@ -1,0 +1,81 @@
+homeassistant:
+  customize:
+    media_player.HomeBits:
+      emulated_hue: false
+      emulated_hue_name: "Playroom Home"
+      icon: mdi:cast
+    group.livingroom_all:
+      order: 10
+    group.darig:
+      order: 3
+    group.salabits:
+      order: 4
+    group.sala_lights:
+      order: 1
+    group.living_room_tv:
+      order: 2
+
+group:
+  livingroom_all:
+    view: yes
+    name: 'Livingroom'
+    icon: mdi:airplay
+    entities:
+    - group.darig
+    - group.salabits
+    - group.sala_lights
+    - group.living_room_tv
+    - media_player.HomeBits
+  
+  sala_lights:
+    name: 'Livingroom Lights'
+    entities:
+    - light.computer_neopixel
+    - light.living_room_lamp
+    - light.playroom_top_lights
+
+media_player:
+  - platform: cast
+    host: 192.168.2.201
+    name: HomeBits
+
+light:
+  - platform: mqtt_json
+    name: "Computer_NeoPixel"
+    state_topic: "home/ComputerBacklight/wemos01"
+    command_topic: "home/ComputerBacklight/wemos01/set"
+    effect: true
+    effect_list:
+      - bpm
+      - candy cane
+      - confetti
+      - cyclon rainbow
+      - dots
+      - fire
+      - glitter
+      - juggle
+      - lightning
+      - noise
+      - police all
+      - police one
+      - rainbow
+      - rainbow with glitter
+      - ripple
+      - sinelon
+      - solid
+      - twinkle
+    brightness: true
+    flash: true
+    rgb: true
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "playroom top lights"
+    friendly_name: "Playroom Spotlights"
+    state_topic: "home/sonoff/LivingRoom/1/stat"
+    command_topic: "home/sonoff/LivingRoom/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true  

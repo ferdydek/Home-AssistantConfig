@@ -1,0 +1,47 @@
+## alternative method of PhilipsTV control via CEC from connected KODI box (OSMC)
+##
+switch:
+  - platform: command_line
+    switches:
+      philipstv:
+        friendly_name: "Philips TV power"
+        command_on: !secret philipstv_command_on
+        command_off: !secret philipstv_command_off
+        command_state: !secret philipstv_command_state
+        value_template: '{{ value == "on" }}'
+        ## created feature request for scan_interval as the status item can take a lot of time
+        ## https://community.home-assistant.io/t/scan-interval-for-switch-command-lines-state/18596/4
+        ##
+
+group:
+  philips_tv:
+    name: "Philips TV"
+    entities: 
+      - automation.keep_philips_tv_alive_while_kodi_is_playing_dont_let_it_go_to_sleep
+      - switch.philipstv
+
+
+automation:
+  - id: keep_Philips_TV_alive
+    alias: Keep Philips TV alive while KODI is playing (dont let it go to sleep)
+    trigger:
+      platform: time
+      minutes: '/5'
+      seconds: '01'
+    condition:
+      - condition: state
+        entity_id: media_player.ferbed
+        state: 'playing'
+    action:
+      service: shell_command.philipstv_volumeup
+        
+  
+shell_command:
+  philipstv_volumeup: 'cat /home/homeassistant/hass_scripts/philipsTVCec-VolUP.sh | ssh osmc@ferbed' #keep alive 
+
+# TODO:
+
+# - automation to keep alive while FebBer media player is playing, so that the autooff does not kick in.
+# - automation to power off tv if ferbed is idle for more than xx minutes.
+# - add documentation on how to setup the trust for remote ssh execution ( https://serverfault.com/questions/241588/how-to-automate-ssh-login-with-password )
+

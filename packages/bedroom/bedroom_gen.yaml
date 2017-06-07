@@ -1,0 +1,91 @@
+homeassistant:
+  customize:
+    group.bedroom_all:
+      order: 11
+    group.bedroom_lights:
+      order: 1
+    switch.philipstv:
+      order: 2
+    light.tradfri_bulb_gu10_ws_400lm:
+      emulated_hue_name: "Bedroom Top 1"
+      friendly_name: "Bedroom Top one"
+      icon: mdi:ceiling-light
+      emulated_hue: false
+
+    light.tradfri_bulb_gu10_ws_400lm_2:
+      emulated_hue_name: "Bedroom Top 2"
+      friendly_name: "Bedroom Top two"
+      icon: mdi:ceiling-light
+      emulated_hue: false
+
+    light.tradfri_bulb_gu10_ws_400lm_3:
+      emulated_hue_name: "Bedroom Top 3"
+      friendly_name: "Bedroom Top three"
+      icon: mdi:ceiling-light
+      emulated_hue: false
+
+    light.tradfri_bulb_gu10_ws_400lm_4:
+      emulated_hue_name: "Bedroom Top 4"
+      friendly_name: "Bedroom Top four"
+      icon: mdi:ceiling-light 
+      emulated_hue: false
+
+    media_player.bedsoundbits:
+      emulated_hue: false
+      emulated_hue_name: "Bedroom Cast"
+      friendly_name: "Bedroom Chromesast"
+      icon: mdi:cast
+    media_player.ferbed:
+      emulated_hue: false
+      emulated_hue_name: "Bedroom Kodi"
+      icon: mdi:kodi
+      order: 3
+
+group:
+  bedroom_all:
+    view: yes
+    name: 'Bedroom'
+    icon: mdi:hotel
+    entities:
+    - group.bedroom_lights
+    - switch.philipstv
+    - media_player.ferbed
+    - media_player.BedSoundBits
+
+  bedroom_lights:
+    name: Bedroom Lights
+    entities:
+    - light.xmass_lights
+    - light.bedroom_lamp
+    - group.bedroom_cieling_lights
+
+  bedroom_cieling_lights:
+    name: Bedroom Top Lights
+    icon: mdi:ceiling-light
+    entities:
+    - light.tradfri_bulb_gu10_ws_400lm
+    - light.tradfri_bulb_gu10_ws_400lm_2
+    - light.tradfri_bulb_gu10_ws_400lm_3
+    - light.tradfri_bulb_gu10_ws_400lm_4
+
+light:
+  - platform: mqtt
+    name: "xmass lights"
+    state_topic: "home/sonoff/xmass/1/stat"
+    command_topic: "home/sonoff/xmass/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+
+media_player:
+  - platform: kodi
+    host: 192.168.2.110
+    name: FerBed
+    port: 80
+
+  - platform: cast
+    host: 192.168.2.202
+    name: BedSoundBits
+
+    

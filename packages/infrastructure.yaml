@@ -1,0 +1,69 @@
+homeassistant:
+  customize:
+    
+    media_player.spotify:
+      emulated_hue: false  
+  
+    light.tradfri_bulb_e27_ws_opal_980lm_2:
+      emulated_hue_name: "Playroom Lamp"
+      friendly_name: "Playroom Lamp"
+      icon: mdi:lamp
+
+    light.tradfri_bulb_e14_ws_opal_400lm:
+      emulated_hue_name: "Bedroom Lamp"
+      friendly_name: "Bedroom Lamp"
+      icon: mdi:lamp
+
+    light.tradfri_group:
+      emulated_hue: false
+      hidden: true
+
+    media_player.plex_6kll0ojmbozyrjk8z59jvh1t:
+      hidden: true
+    media_player.plex_b5297e5d5116a00b_com_plexapp_android:
+      hidden: true
+
+mqtt: 
+  broker: !secret my_base_url
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  username: !secret localmqtt_user 
+  password: !secret localmqtt_pass 
+  protocol: 3.1
+
+
+device_tracker:
+ - platform: asuswrt
+   host: 192.168.2.1
+   username: !secret asuswrt_username 
+   password: !secret asuswrt_passsword
+   protocol: telnet
+   interval_seconds: 30
+   consider_home: 60
+   track_new_devices: no
+
+media_player:
+  - platform: plex
+    entity_namespace: 'plex'
+    include_non_clients: false
+    scan_interval: 15
+    show_all_controls: true
+    use_custom_entity_ids: false
+    use_episode_art: true
+
+  - platform: spotify
+    client_id: !secret spotify_dev_client_id
+    client_secret: !secret spotify_dev_client_secret
+
+
+
+sensor:
+  - platform: cert_expiry
+    host: !secret my_base_url 
+    port: 443
+
+tradfri:
+  host: 192.168.2.237
+  api_key: !secret tradfri_api_key 
+  allow_tradfri_groups: false

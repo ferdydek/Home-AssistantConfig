@@ -1,10 +1,12 @@
-- platform: waqi
-  token: 9b48577cee1d0b6dad479412a48fcb1cd8a31823
-  locations: lisboa  
+- platform: snmp
+  host: elCastro
+  name: elcastro_snmp
+  baseoid: 1.3.6.1.2.1.1.5.0
+  community: public
+  version: 2c
 
-- platform: haveibeenpwned
-  email: 
-    - ferdydek@gmail.com
-    - nunocastro99@hotmail.com    
+- platform: waqi
+  token: !secret waqi_token
+  locations: lisboa  
 
 - platform: yr

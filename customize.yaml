@@ -1,39 +1,35 @@
 
-
-#################################
-## EMULATED HUE customizations ##
-
-# skip devices
-##media_player.lxbits_2:
-##  emulated_hue: false
-switch.switch1: 
-  emulated_hue: false
-group.multimedia:
-  emulated_hue: false
-
-
 # Rename devices
-switch.playroom_top_lights:
+light.playroom_top_lights:
   emulated_hue_name: "Playroom Top lights"
   friendly_name: "Playroom Spotlights"
   icon: mdi:ceiling-light
-switch.xmass_lights:
+light.xmass_lights:
   emulated_hue_name: "Christmas Lights"
   friendly_name: "Christmass Lights"
   icon: mdi:led-on
-media_player.bedsoundbits:
-  emulated_hue_name: "Bedroom Cast"
-  friendly_name: "Bedroom Chromesast"
-  icon: mdi:cast
-media_player.HomeBits:
-  emulated_hue_name: "Playroom Home"
-  icon: mdi:cast
-media_player.ferbed:
-  emulated_hue_name: "Bedroom Kodi"
+
+light.Computer_NeoPixel:
+  emulated_hue_name: "Computer Backlight"
+  friendly_name: "Computer Backlight"
+  icon: mdi:flip-to-back
+  
+
+## / HIDE Unused items  ##   
+##########################
+
+switch.Switch1:
+  hidden: true
+
+media_player.DaRig:
+  hidden: true
   icon: mdi:kodi
-media_player.salabits:
-  emulated_hue_name: "Playroom Kodi"
-  icon: mdi:kodi
+
+media_player.plex_6kll0ojmbozyrjk8z59jvh1t:
+  hidden: true
+media_player.plex_b5297e5d5116a00b_com_plexapp_android:
+  hidden: true
+
 
 ## / EMULATED HUE              ##   
 #################################
@@ -41,15 +37,37 @@ media_player.salabits:
 #############################
 ## SWITCHES customizations ##
 
+
+switch.philipstv:
+  icon: mdi:television
+
+
 ## TRACKER ##
 #############
-device_tracker.s6bits:
+device_tracker.hassbits_fs6:
   friendly_name: ferdi.S6
   entity_picture: "/local/ferdydek.jpg"
+  icon: mdi:cellphone-android
+  track: true
+device_tracker.hassbits_ferdys6:
+  friendly_name: ferdi.S6
+  entity_picture: "/local/ferdydek.jpg"
+  icon: mdi:cellphone-android
+  track: true
 
 device_tracker.android2eb7d779f91ab980:
-  friendly_name: nuno.n4
-  entity_picture: "/local/andre.PNG"
+  hidden: true
+  track: false
+
+device.hassbits_fs6:
+  track: true
+
+device.hassbits_ferdys6:
+  track: true  
 
 ## / TRACKER ##
 ###############
+
+
+group.automations:
+  order: 80

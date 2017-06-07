@@ -1,0 +1,31 @@
+- action:
+  - service: shell_command.renew_ssl
+  alias: Auto Renew SSL Cert
+  id: '1495331366239'
+  trigger:
+  - below: '7'
+    entity_id: sensor.ssl_certificate_expiry
+    platform: numeric_state
+- action:
+  - data_template:
+      message: '{{ [ "Welcome home Rafal. I missed you so much.", "Welcome back Rafal.
+        Have you had a good day?", "Is it that time already, welcome home Rafal the
+        creator!", "Ahh, I see Rafal is back. Great to see you old chap.", "I came
+        across a wooden stick. Oh, and hello Rafal.", "GET FUCKED", "Sup, massive
+        faggot", "Welcome home my Lord, how may i assist you? may i take your coat?"  ]
+        | random }}
+
+        '
+    entity_id: media_player.homebits
+    service: tts.google_say
+  alias: Welcome Home Raf
+  id: Welcome Home Raf
+  trigger:
+  - entity_id: device_tracker.d850e64147a7
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    from: not_home
+    platform: state
+    to: home
